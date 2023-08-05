@@ -56,7 +56,7 @@ const register = async (req, res) => {
     const foundUser = await User.findOne({ username }).exec()
 
     if (foundUser) {
-        return res.status(401).json({ message: 'Duplicate Username!' })
+        return res.status(409).json({ message: 'Duplicate Username!' })
     }
 
     const passwordHash = await bcrypt.hash(password, 10)
