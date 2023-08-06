@@ -43,8 +43,9 @@ const login = async (req, res) => {
         sameSite: 'None', // Cross-site cookie
         maxAge: 7 * 24 * 60 * 60 * 1000 // cookie expiry set to match refreshToken
     })
+    const roles = foundUser.roles
 
-    res.json({ accessToken })
+    res.json({ accessToken, roles })
 }
 
 const register = async (req, res) => {

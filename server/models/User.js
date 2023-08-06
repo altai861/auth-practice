@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    roles: {
+        type: Array,
+        default: [2001]
+    }
 })
 
 module.exports = mongoose.model('User', userSchema)
