@@ -34,7 +34,7 @@ const login = async (req, res) => {
     const refreshToken = jwt.sign(
         { "username": foundUser.username },
         process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: '15s' }
+        { expiresIn: '1d' }
     )
 
     res.cookie('jwt', refreshToken, {
@@ -88,9 +88,8 @@ const refresh = async (req, res) => {
             if (err) return res.status(403).json({ message: 'Forbidden' })
 
             const foundUser = await User.findOne({ username: decoded.username }).exec()
-
             if (!foundUser) return res.status(401).json({ message: 'Unauthorized' })
-
+            const roles = Object.values(foundUser.roles)
             const accessToken = jwt.sign(
                 {
                     "UserInfo": {
@@ -102,7 +101,7 @@ const refresh = async (req, res) => {
                 { expiresIn: '10s' }
             )
 
-            res.json({ accessToken })
+            res.json({ roles, accessToken })
         }
     )
 }
